@@ -13,7 +13,7 @@ import { cn } from './utils/cn';
 import { LicenseEvent } from './types';
 
 // 設定 API 網址
-const API_URL = "https://shine-cert-api-v2.zeabur.app";
+const API_URL = "https://shine-cert-apy-v2.zeabur.app";
 type View = 'calendar' | 'personnel' | 'statistics';
 
 export default function App() {
