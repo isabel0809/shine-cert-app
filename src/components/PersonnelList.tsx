@@ -62,28 +62,32 @@ export const PersonnelList: React.FC<PersonnelListProps> = ({ events, onAdd, onU
 
 
 
-  const handleSave = (e: React.FormEvent) => {
-
+const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!editingEvent) return;
 
+    // 這裡我們進行最後的欄位對齊檢查
+    // 確保這裡的 Key 名稱與 index.js 裡的 const { ... } = req.body 完全一致
+    const payload = {
+      name: editingEvent.name || '',
+      licenseName: editingEvent.licenseName || '',
+      issueDate: editingEvent.issueDate || new Date(),
+      expiryDate: editingEvent.expiryDate || new Date(),
+      project: editingEvent.project || '閒置人員', 
+      category: editingEvent.category || '機具操作',
+      notes: editingEvent.notes || '',
+      attachmentName: editingEvent.attachmentName || ''
+    };
 
+    console.log("【準備送出的 Payload】:", payload); // 重要：打開 F12 Console 看這行印出什麼
 
-    if ('id' in editingEvent) {
-
-      onUpdate(editingEvent as LicenseEvent);
-
+    if ('id' in editingEvent && editingEvent.id) {
+      onUpdate({ ...payload, id: editingEvent.id } as LicenseEvent);
     } else {
-
-      onAdd(editingEvent as Omit<LicenseEvent, 'id'>);
-
+      onAdd(payload);
     }
-
     setEditingEvent(null);
-
   };
-
 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
