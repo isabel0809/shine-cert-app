@@ -38,7 +38,7 @@ useEffect(() => {
 }, []);
 
 
-  // 2. 新增資料 (POST)
+ // 2. 新增資料 (POST)
   const handleAdd = async (event: Omit<LicenseEvent, 'id'>) => {
     try {
       const response = await fetch(`${API_URL}/certificates`, {
@@ -48,12 +48,19 @@ useEffect(() => {
       });
       if (response.ok) {
         const newEvent = await response.json();
-        setEvents((prev) => [...prev, newEvent]);
+        // 確保日期被轉換為 Date 對象
+        const parsedEvent = {
+          ...newEvent,
+          expiryDate: new Date(newEvent.expiryDate),
+          issueDate: newEvent.issueDate ? new Date(newEvent.issueDate) : undefined,
+        };
+        setEvents((prev) => [...prev, parsedEvent]);
       }
     } catch (err) {
       console.error("新增資料失敗:", err);
     }
   };
+
 
   // 3. 刪除資料 (DELETE) - 與後端同步
   const handleDelete = async (id: string) => {
