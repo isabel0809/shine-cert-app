@@ -44,15 +44,16 @@ export const Statistics: React.FC<StatisticsProps> = ({ events }) => {
     const monthLabel = format(monthDate, 'MM月');
     const startOfThisMonth = monthDate;
     const endOfThisMonth = addMonths(monthDate, 1);
-    
+
     return {
       month: monthLabel,
       expiryCount: events.filter(e => {
-        const d = e.expiryDate;
+        const d = e.expiryDate instanceof Date ? e.expiryDate : new Date(e.expiryDate);
         return (isAfter(d, startOfThisMonth) || d.getTime() === startOfThisMonth.getTime()) && isBefore(d, endOfThisMonth);
       }).length
     };
   });
+
 
   const COLORS = ['#0984E3', '#00B894', '#E17055', '#6C5CE7', '#FDCB6E', '#FF4D4D'];
 
