@@ -26,7 +26,7 @@ interface CalendarProps {
 }
 
 export const Calendar: React.FC<CalendarProps> = ({ events }) => {
-  const [currentDate, setCurrentDate] = useState(new Date(2026, 4, 1)); // Default to May 2026 as per base data
+  const [currentDate, setCurrentDate] = useState(new Date()); // 從今天開始
   const [filters, setFilters] = useState<FilterState>({ project: '全部', category: '全部' });
   const [selectedEvent, setSelectedEvent] = useState<LicenseEvent | null>(null);
 
